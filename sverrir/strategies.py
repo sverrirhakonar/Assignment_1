@@ -29,6 +29,36 @@ class MomemtumStrategy(Strategy):
                 signals.append(signal)
         return signals
 
+class MovingAverageCrossOver(Strategy):
+    
+    def __init__(self, short_window = 10, long_window = 20):
+        self._short_window = short_window
+        self._long_window = long_window
+        self._prices = []
+
+    def generate_signals(self, tick: MarketDataPoint) -> list:
+        signals = []
+        self._prices.append(tick.price)
+        if len(self._prices) > self._long_window:
+            self._prices.pop(0)
+        
+        if len(self._prices) == self._long_window:
+            slow_average = sum(self._prices) / self._long_window
+            fast_average = sum(self._prices[-self._short_window:]) / self._short_window
+
+            if fast_average > slow_average:
+                signal = ('BUY', tick.symbol, 1, tick.price)
+                signals.append(signal)
+            elif fast_average < slow_average:
+                signal = ('SELL', tick.symbol, 1, tick.price)
+                signals.append(signal)
+        return signals
+
+
+
+        
+
+
 
 
         
