@@ -7,4 +7,10 @@ class MarketDataPoint:
     symbol: str
     price: float
 
+class Order:
+    def __init__(self,symbol, quantity, price, status = 'NEW'):
+        self.symbol = symbol
+        self.quantity = quantity
+        self.price = price
+        self.status = status
     
