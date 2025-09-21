@@ -54,11 +54,3 @@ class MovingAverageCrossOver(Strategy):
                 signals.append(signal)
         return signals
 
-
-
-        
-
-
-
-
-        
