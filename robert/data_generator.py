@@ -5,6 +5,7 @@ import datetime
 import random
 import time
 import csv
+print('test git')
 
 @dataclass(frozen=True)
 class MarketDataPoint:
