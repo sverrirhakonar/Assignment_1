@@ -4,6 +4,7 @@ from datetime import datetime
 from models import MarketDataPoint
 
 # timestamp, symbol, price
+#sverrir
 def read_market_data(filename):
     data_points = []
     with open(filename, mode='r', newline = '') as file:
