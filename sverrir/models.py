@@ -13,4 +13,11 @@ class Order:
         self.quantity = quantity
         self.price = price
         self.status = status
+
+class OrderError(Exception):
+    pass
+
+class ExecutionError(Exception):
+    pass
+
     
