@@ -14,6 +14,8 @@ class MarketDataPoint:
     symbol: str
     price: float
 
+
+#s
 def read_csv_to_immutable_list(csv_file_name):
     with open('market_data.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
