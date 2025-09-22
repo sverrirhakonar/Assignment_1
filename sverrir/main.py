@@ -1,6 +1,9 @@
 from data_loader import read_market_data
 from strategies import MomemtumStrategy
 from strategies import MovingAverageCrossOver
+from models import Order, OrderError, ExecutionError
+from engine import TradingEngine
+import random
 
 filename = 'market_data.csv'
 
@@ -19,9 +22,10 @@ if __name__ == '__main__':
     crossover = MovingAverageCrossOver(short_window=10, long_window=30)
     strategies = [momentum, crossover]
 
-    for tick in market_data_ticks:
-        orders_per_tick = generate_orders(tick, strategies)
-        print(orders_per_tick)
+    trade_engine = TradingEngine(strategies)
+            
+
+
 
 
 
