@@ -38,4 +38,31 @@ def calculate_max_drawdown(equity_curve):
             if drawdown > max_drawdown:
                 max_drawdown = drawdown
     return max_drawdown
+
+def print_performance_report(engine, strategy_name):
+    """Calculates and prints a full performance report for a given engine."""
+    
+    # Get the results from the engine
+    equity_curve = engine.equity_curve
+    portfolio = engine.portfolio
+    
+    # Calculate the metrics
+    total_return_pct = calculate_total_return(equity_curve) * 100
+    periodic_returns = calculate_periodic_return(equity_curve)
+    sharpe_ratio_val = calculate_sharpe_ratio(periodic_returns)
+    max_drawdown_pct = calculate_max_drawdown(equity_curve)
+    
+    # Print the report
+    print(f"--- Performance: {strategy_name} ---")
+    print(f"Total Return: {total_return_pct:.2f}%")
+    print(f"Sharpe Ratio: {sharpe_ratio_val:.2f}")
+    print(f"Maximum Drawdown: {max_drawdown_pct:.2f}%")
+    print("--------------------------------------")
+    print("Final Portfolio Holdings:")
+    if portfolio:
+        for symbol, position in portfolio.items():
+            print(f"  {symbol}: {position['quantity']} shares @ avg price of ${position['avg_price']:.2f}")
+    else:
+        print("  No open positions.")
+    print("--------------------------------------\n")
         
