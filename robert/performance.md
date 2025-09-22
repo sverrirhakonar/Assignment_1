@@ -4,12 +4,12 @@
 
 | Metric | Value |
 |:--|--:|
-| Total return | 0.54% |
-| Sharpe ratio (annualized) | inf |
-| Max drawdown | 0.47% |
+| Total return | -35.26% |
+| Sharpe ratio (annualized) | -0.999 |
+| Max drawdown | 39.43% |
 | Observations | 500 |
-| Start | 2025-09-21 01:42:07.458556 |
-| End | 2025-09-21 01:43:18.441260 |
+| Start | 2025-09-21 20:32:34.145897 |
+| End | 2025-09-21 20:32:39.438957 |
 
 ## Equity curve (Embedded PNG)
 
