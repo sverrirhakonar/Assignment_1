@@ -87,7 +87,7 @@ if __name__ == "__main__":
         start_price=150.0,
         filename="market_data.csv",
         num_ticks=500,
-        volatility=0.01047,
+        volatility=0.0125,
         interval= 0.01
     )
     print("market_data.csv generated with 500 ticks.")
