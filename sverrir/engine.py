@@ -58,10 +58,10 @@ class TradingEngine:
                                 self.cash += quantity * price
                                 if self.portfolio[symbol]['quantity'] == 0:
                                     del self.portfolio[symbol]
-                                else:
-                                    print(f"WARNING: Tried to sell {quantity} {symbol} but only own {quantity_owned}.")
                             else:
-                                print(f"WARNING: Tried to sell {symbol} but have no position.")        
+                                print(f"WARNING: Tried to sell {quantity} {symbol} but only own {quantity_owned}.", quantity_owned - quantity)
+                        else:
+                            print(f"WARNING: Tried to sell {symbol} but have no position.")        
                 except ExecutionError as e:
                     print("Execution error")
             equity_value = 0
