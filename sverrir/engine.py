@@ -1,5 +1,5 @@
 import random
-from strategies import MomemtumStrategy
+from strategies import MomentumStrategy
 from strategies import MovingAverageCrossOver
 from models import Order, OrderError, ExecutionError
 

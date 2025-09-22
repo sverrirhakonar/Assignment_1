@@ -6,7 +6,7 @@ class Strategy(ABC):
     def generate_signals(self, tick: MarketDataPoint) -> list:
         pass
 
-class MomemtumStrategy(Strategy):
+class MomentumStrategy(Strategy):
     def __init__(self, window = 5):
         self._window = window
         self._prices = []
