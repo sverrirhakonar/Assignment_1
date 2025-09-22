@@ -75,9 +75,7 @@ class ExecutionEngine:
             self._equity_curve.append((tick.timestamp, equity_value))
 
     def execute_order(self, order):
-        # Tekka hvort cash se nog
-        # Selur ekki bref sem thu att ekki
-        # reiknar avg price
+
         if order.action == 0: # If hold then always OK.
             return 
         amount = order.quantity*order.price

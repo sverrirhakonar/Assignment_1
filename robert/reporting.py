@@ -8,7 +8,7 @@ class ReportGeneration:
         self._periods_per_year = periods_per_year
         self._risk_free_rate = risk_free_rate
 
-    def generate_report(self):
+    def generate_report(self, sharpe_setting = "Assume daily ticks"):
         # Turn into pandas dataframe for easier calculations
         df = pd.DataFrame(self._equity_curve, columns=["timestamp", "equity value"])
         #Calculate total return
@@ -21,7 +21,10 @@ class ReportGeneration:
 
         # Calculate sharpe ratio
 
-        sharpe_ratio_annual = self.sharpe_using_average_time_interval(df, risk_free_annual=0.0)
+        if sharpe_setting == "Assume daily ticks":
+            sharpe_ratio_annual = self.sharpe_assuming_daily_tick(df, risk_free_annual=0.0)
+        else:
+            sharpe_ratio_annual = self.sharpe_using_average_time_interval(df, risk_free_annual=0.0)
 
         # Calculate max drawdown
         running_peak = df["equity value"].cummax()
@@ -39,8 +42,7 @@ class ReportGeneration:
         pl.tight_layout()
         img_path = "equity_curve.png"
         pl.savefig(img_path, dpi=150)
-        pl.close()
-
+        pl.show()
         # Write Markdown file
         with open("performance.md", "w", encoding="utf-8") as f:
             f.write("# Performance Report\n\n")
@@ -59,17 +61,26 @@ class ReportGeneration:
             f.write(f"![Equity Curve]({img_path})\n")
 
         print('Performance report is available in performance.md.')
+    
+    def sharpe_assuming_daily_tick(self, df, risk_free_annual=0.0):
+        equity_value = df["equity value"]
+        returns = equity_value.pct_change().dropna()
+        steps_per_year = 251 # Assume 251 trading days per year
+        annual_vol = returns.std() * np.sqrt(steps_per_year)
+        annual_returns = (equity_value.iloc[-1] / equity_value.iloc[0]) ** (steps_per_year/len(returns)) - 1
+        return (annual_returns - risk_free_annual) / annual_vol
+
 
     def sharpe_using_average_time_interval(self, df, risk_free_annual=0.0):
         timestamp = pd.to_datetime(df["timestamp"])
         equity_value = df["equity value"] 
-        rets = equity_value.pct_change().dropna()
+        returns = equity_value.pct_change().dropna()
 
         elapsed_micro_s = (timestamp.iloc[-1] - timestamp.iloc[0]).value / 1000  # nanoseconds to microseconds
         micro_s_per_year = 251 * 24 * 60 * 60 * 1e6  # trading-year in microseconds
 
-        steps_per_year = micro_s_per_year / (elapsed_micro_s / len(rets))
-        annual_vol = rets.std() * np.sqrt(steps_per_year)
+        steps_per_year = micro_s_per_year / (elapsed_micro_s / len(returns))
+        annual_vol = returns.std() * np.sqrt(steps_per_year)
         annual_returns = (equity_value.iloc[-1] / equity_value.iloc[0]) ** (micro_s_per_year / elapsed_micro_s) - 1
 
         return (annual_returns - risk_free_annual) / annual_vol
