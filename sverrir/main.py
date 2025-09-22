@@ -6,7 +6,7 @@ from engine import TradingEngine
 from reporting import calculate_total_return
 import random
 
-filename = 'market_data.csv'
+filename = 'sverrir/market_data.csv'
 CASH = 100000
 
 def generate_orders(tick, strategies):

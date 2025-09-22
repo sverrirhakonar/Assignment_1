@@ -20,21 +20,17 @@ class TradingEngine:
 
     def run(self, ticks):
         for tick in ticks:
+            price = tick.price
             orders_per_tick = self.generate_orders(tick)
             for order in orders_per_tick:
                 action = order[0]
                 symbol = order[1]
                 quantity = order[2]
-                price = order[3]
+                ##price = order[3]
 
                 if quantity <= 0:
-                    raise OrderError()
-                
+                    raise OrderError()            
                 try:
-                    if random.random() < 0.05:
-                        raise ExecutionError("some random failure")
-                    
-
                     if action == 'BUY':
                         if symbol not in self.portfolio:
                             self.portfolio[symbol] = {'quantity' : quantity, 'avg_price' : price}
